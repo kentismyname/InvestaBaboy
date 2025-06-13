@@ -1,0 +1,15 @@
+.active-plan-card {
+  border-radius: 1.25rem;
+  background-color: #fefefe;
+  transition: transform 0.3s ease;
+}
+
+.active-plan-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.progress-bar {
+  font-size: 0.75rem;
+  font-weight: 600;
+}

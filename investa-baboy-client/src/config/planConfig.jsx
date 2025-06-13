@@ -1,3 +1,4 @@
+// planConfig.jsx
 const planSettings = {
   pigletPrice: 6500,
   otherCosts: 8500,

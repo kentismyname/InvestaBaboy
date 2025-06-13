@@ -1,0 +1,27 @@
+.auth-bg {
+  background: linear-gradient(to right, #f9f9f9, #e0f7fa);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.auth-card {
+  max-width: 450px;
+  width: 100%;
+  border: none;
+  border-radius: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+  background: #fff;
+}
+
+.auth-btn {
+  transition: all 0.3s ease;
+}
+
+.auth-btn:hover {
+  filter: brightness(90%);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

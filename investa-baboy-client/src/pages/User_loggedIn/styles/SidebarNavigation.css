@@ -1,0 +1,25 @@
+/* SidebarNavigation.css */
+.sidebar-nav {
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.06);
+  min-height: 100%;
+}
+
+.sidebar-tab {
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  color: #333;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.sidebar-tab:hover {
+  background-color: #f8f9fa;
+}
+
+.sidebar-tab.active {
+  background-color: #007bff;
+  color: white;
+}

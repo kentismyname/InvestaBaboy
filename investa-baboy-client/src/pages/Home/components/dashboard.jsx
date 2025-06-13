@@ -7,13 +7,14 @@ import {
   LineElement,
   CategoryScale,
   LinearScale,
+  Filler,
   PointElement,
   Tooltip,
   Legend
 } from 'chart.js';
 import useInView from '../../../hooks/useInView';
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
+ChartJS.register(LineElement, CategoryScale, LinearScale, Filler, PointElement, Tooltip, Legend);
 
 function Dashboard() {
   const [ref, inView] = useInView();

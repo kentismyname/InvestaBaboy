@@ -29,14 +29,14 @@ function Header() {
 
           <div className="d-flex ms-3">
             <Button
-              href='/InvestaBaboy/auth'
+              href='/InvestaBaboy/#/auth'
               variant="outline-success"
               className="me-2 px-4 rounded-pill fw-semibold"
             >
               Login
             </Button>
             <Button
-              href='/InvestaBaboy/auth'
+              href='/InvestaBaboy/#/auth'
               variant="success"
               className="px-4 rounded-pill fw-semibold"
             >

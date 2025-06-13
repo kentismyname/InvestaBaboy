@@ -1,0 +1,23 @@
+/* investmentSummary.css */
+.summary-card {
+  border-top: 5px solid transparent;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  padding-top: 0.5rem;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-top-icon {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.5rem;
+  opacity: 0.15;
+  user-select: none;
+}

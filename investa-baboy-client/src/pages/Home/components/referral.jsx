@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Card, Form, Toast } from 'react-bootstrap';
-import { FaGift, FaCopy, FaUsers } from 'react-icons/fa';
+import { FaGift, FaCopy, FaUsers, FaCheckCircle } from 'react-icons/fa';
 import useInView from '../../../hooks/useInView';
 
-function Referral() {
+function Referral({ isLoggedIn = false, referralCount = 0 }) {
   const [ref, inView] = useInView();
   const [copied, setCopied] = useState(false);
 
@@ -21,9 +21,7 @@ function Referral() {
       id="referral"
       ref={ref}
       className={`py-5 fadeinupAnimate ${inView ? 'visible' : ''}`}
-      style={{
-        background: "linear-gradient(135deg, #e3fce4 0%, #d1f2d6 100%)",
-      }}
+      style={{ background: "linear-gradient(135deg, #e3fce4 0%, #d1f2d6 100%)" }}
     >
       <Container>
         <Row className="justify-content-center text-center mb-4">
@@ -35,6 +33,12 @@ function Referral() {
             <p className="lead text-muted">
               Get rewarded for every successful referral! Share your link — when a friend signs up and invests, you earn ₱500. 💸
             </p>
+            {isLoggedIn && (
+              <p className="text-success fw-semibold">
+                <FaCheckCircle className="me-2 text-success" />
+                You've successfully referred <strong>{referralCount}</strong> {referralCount === 1 ? 'user' : 'users'} who invested!
+              </p>
+            )}
           </Col>
         </Row>
 
@@ -78,7 +82,7 @@ function Referral() {
             </Toast>
           </Col>
         </Row>
-      </Container>
+      </Container> 
     </section>
   );
 }

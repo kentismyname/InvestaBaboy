@@ -1,24 +1,22 @@
+// src/components/Home/Hero.jsx
 import React from 'react';
 import heroImage from '../../../assets/imgs/hero-img.png';
+import '../styles/Hero.css';
 
 function Hero() {
   return (
-    <div id='home' className="bg-light py-5">
+    <div id="home" className="bg-light py-5">
       <div className="container py-4">
         <div className="row align-items-center">
           {/* Left Text */}
-          <div className="col-md-6 text-center text-md-start mb-4 mb-md-0 hero-text">
+          <div className="col-md-6 text-center text-md-start mb-4 mb-md-0 hero-text-3d">
             <span className="badge bg-success-subtle text-success fw-semibold mb-3 px-3 py-2 fs-6 rounded-pill shadow-sm">
               📈 High-Yield Agriculture Investment
             </span>
 
             <h1 className="display-5 fw-bold lh-sm">
               Invest in Pigs,<br />
-              <span style={{
-                background: 'linear-gradient(to right, #198754, #28a745)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>
+              <span className="text-3d-gradient">
                 Earn Up to 60% ROI
               </span>
             </h1>
@@ -37,16 +35,13 @@ function Hero() {
 
           {/* Right Image */}
           <div className="col-md-6 text-center">
-            <img
-              src={heroImage}
-              alt="Pig and money tree"
-              className="img-fluid hero-img animated-float"
-              style={{
-                maxHeight: '480px',
-                width: '100%',
-                objectFit: 'contain',
-              }}
-            />
+            <div className="hero-img-3d-container">
+              <img
+                src={heroImage}
+                alt="Pig and money tree"
+                className="img-fluid hero-img-3d"
+              />
+            </div>
           </div>
         </div>
       </div>

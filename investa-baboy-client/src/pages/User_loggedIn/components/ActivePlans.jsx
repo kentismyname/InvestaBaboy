@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, ProgressBar, Button, Badge } from 'react-bootstrap';
 import dayjs from 'dayjs';
 import planSettings from '../../../config/planConfig';
+import Switch from './Switch';
 import '../styles/ActivePlans.css';
 
-// Active plans data
-const plans = [
+const initialPlans = [
   {
     planName: 'Grower Plan 🪴',
     pigs: 4,
     startDate: '2025-03-01',
-    harvestDate: '2025-06-29',
     contractId: 'PLAN-F0973C7A',
     autoRenew: true,
   },
@@ -18,21 +17,18 @@ const plans = [
     planName: 'Starter Plan 🐷',
     pigs: 1,
     startDate: '2025-04-05',
-    harvestDate: '2025-08-03',
     contractId: 'PLAN-D4B54E5A',
     autoRenew: false,
   },
   {
     planName: 'Premium Plan 🐷',
     pigs: 5,
-    startDate: '2025-06-05',
-    harvestDate: '2025-10-03',
+    startDate: '2024-06-03',
     contractId: 'PLAN-D4B54E5A',
     autoRenew: false,
   },
 ];
 
-// ROI configuration (per plan type)
 const planRoiRates = {
   Starter: 0.5,
   Grower: 0.55,
@@ -42,18 +38,16 @@ const planRoiRates = {
   Diamond: 0.6,
 };
 
-// Calculates harvest progress
 const calculateProgress = (start, end) => {
   const totalDays = dayjs(end).diff(dayjs(start), 'day');
   const passedDays = dayjs().diff(dayjs(start), 'day');
   const percent = Math.min(Math.max((passedDays / totalDays) * 100, 0), 100);
   return {
     daysLeft: Math.max(totalDays - passedDays, 0),
-    percent: percent.toFixed(0),
+    percent: Math.round(percent),
   };
 };
 
-// Profit calculator using dynamic ROI rate
 const calculateProfit = (pigs, roiRate) => {
   const { pigletPrice, otherCosts, fixedWeight, pricePerKilo } = planSettings;
   const totalCost = (pigletPrice + otherCosts) * pigs;
@@ -65,46 +59,45 @@ const calculateProfit = (pigs, roiRate) => {
   };
 };
 
-const ActivePlans = () => {
-  const [totals, setTotals] = useState({
-    pigs: 0,
-    totalCost: 0,
-    totalProfit: 0,
-  });
+const ActivePlans = ({ setActiveTab }) => {
+  const [plans, setPlans] = useState(initialPlans);
+  const [totals, setTotals] = useState({ pigs: 0, totalCost: 0, totalProfit: 0 });
 
   useEffect(() => {
-    let pigSum = 0;
-    let costSum = 0;
-    let profitSum = 0;
+    let pigSum = 0, costSum = 0, profitSum = 0;
 
     plans.forEach((plan) => {
-      const key = plan.planName.split(' ')[0]; // Get "Starter", "Grower", etc.
+      const key = plan.planName.split(' ')[0];
       const roi = planRoiRates[key] || 0.5;
       const { totalCost, expectedProfit } = calculateProfit(plan.pigs, roi);
-
       pigSum += plan.pigs;
       costSum += totalCost;
       profitSum += expectedProfit;
     });
 
     setTotals({ pigs: pigSum, totalCost: costSum, totalProfit: profitSum });
-  }, []);
+  }, [plans]);
+
+  const handleToggleRenew = (index) => {
+    const updatedPlans = [...plans];
+    updatedPlans[index].autoRenew = !updatedPlans[index].autoRenew;
+    setPlans(updatedPlans);
+  };
 
   return (
     <>
       <h4 className="mb-4">📂 Active Investment Plans</h4>
-
-      {/* Active Plans List */}
       <Row className="g-4">
         {plans.map((plan, index) => {
           const key = plan.planName.split(' ')[0];
           const roi = planRoiRates[key] || 0.5;
-
+          const start = dayjs(plan.startDate);
+          const harvest = start.add(4, 'month');
           const { totalCost, expectedProfit } = calculateProfit(plan.pigs, roi);
-          const { daysLeft, percent } = calculateProgress(plan.startDate, plan.harvestDate);
-          const formattedStart = dayjs(plan.startDate).format('MMM D, YYYY');
-          const formattedHarvest = dayjs(plan.harvestDate).format('MMM D, YYYY');
-          const isReady = parseInt(percent) >= 100;
+          const { daysLeft, percent } = calculateProgress(start, harvest);
+          const formattedStart = start.format('MMM D, YYYY');
+          const formattedHarvest = harvest.format('MMM D, YYYY');
+          const isReady = percent >= 100;
 
           return (
             <Col md={6} key={index}>
@@ -127,7 +120,7 @@ const ActivePlans = () => {
 
                   <ProgressBar
                     now={percent}
-                    label={`${percent}%`}
+                    label={isReady ? 'Completed' : `${percent}%`}
                     variant={isReady ? 'success' : 'primary'}
                     className="rounded-pill mb-3"
                     style={{ height: '8px' }}
@@ -135,13 +128,41 @@ const ActivePlans = () => {
 
                   <div className="d-flex flex-wrap gap-2">
                     <Button variant="outline-primary" size="sm">📄 View Contract</Button>
-                    {isReady && <Button variant="success" size="sm">📤 Withdraw ROI</Button>}
-                    <Button variant="outline-dark" size="sm">🔁 Reinvest</Button>
+                    {isReady && (
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={() => {
+                          setActiveTab('Withdraw Earnings');
+                          setTimeout(() => {
+                            document.getElementById('withdraw')?.scrollIntoView({ behavior: 'smooth' });
+                          }, 100);
+                        }}
+                      >
+                        📤 Withdraw ROI
+                      </Button>
+
+                    )}
+
+                    {isReady && (
+                      <Button
+                        variant="outline-dark"
+                        size="sm"
+                        onClick={() => setActiveTab('Withdraw Earnings')}
+                      >
+                        🔁 Reinvest
+                      </Button>
+                    )}
                   </div>
 
                   <div className="mt-3 small text-muted">
-                    📝 Contract ID: {plan.contractId}<br />
-                    🔁 Auto-Renew: <strong>{plan.autoRenew ? 'Yes' : 'No'}</strong>
+                    <div className="mb-1">📝 Contract ID: {plan.contractId}</div>
+                    <div className="d-flex align-items-center gap-2">
+                      <span>🔁 Auto-Renew:</span>
+                      <div style={{ transform: 'scale(0.85)', transformOrigin: 'left center' }}>
+                        <Switch checked={plan.autoRenew} onChange={() => handleToggleRenew(index)} />
+                      </div>
+                    </div>
                   </div>
                 </Card.Body>
               </Card>

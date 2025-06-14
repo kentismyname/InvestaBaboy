@@ -1,0 +1,48 @@
+.withdraw-card {
+  border-radius: 1rem;
+  background-color: #fff;
+  transition: 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.withdraw-card:hover {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.status-label {
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-label .icon {
+  font-size: 1rem;
+}
+
+.input-amount-group input {
+  font-weight: 500;
+  padding-left: 2.25rem;
+}
+
+.input-amount-group::before {
+  content: "₱";
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-weight: 600;
+}
+
+.withdraw-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.reinvest-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}

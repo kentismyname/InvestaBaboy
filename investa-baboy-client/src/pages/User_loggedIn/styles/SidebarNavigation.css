@@ -1,25 +1,74 @@
-/* SidebarNavigation.css */
 .sidebar-nav {
-  background: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.06);
-  min-height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-right: 1px solid #ddd;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  padding: 1rem;
+}
+
+.sidebar-nav.expanded {
+  width: 260px;
+}
+
+.sidebar-nav.collapsed {
+  width: 80px;
+}
+
+.dashboard-content {
+  margin-left: 260px;
+  padding: 2rem;
+}
+
+.dashboard-content.collapsed {
+  margin-left: 80px;
+}
+
+@media (max-width: 767.98px) {
+  .sidebar-nav {
+    display: none;
+  }
+
+  .sidebar-nav.open {
+    display: block;
+    position: absolute;
+    width: 75%;
+    top: 56px;
+    left: 0;
+    height: 100vh;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    z-index: 1000;
+  }
+
+  .dashboard-content {
+    margin-left: 0 !important;
+  }
 }
 
 .sidebar-tab {
-  padding: 10px 15px;
-  margin-bottom: 8px;
-  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
   color: #333;
-  font-weight: 500;
-  transition: background 0.2s ease;
+  transition: background-color 0.3s;
 }
 
 .sidebar-tab:hover {
-  background-color: #f8f9fa;
+  background-color: #e2e6ea;
 }
 
 .sidebar-tab.active {
-  background-color: #007bff;
-  color: white;
+  background-color: #d6d8db;
+  font-weight: bold;
+}
+
+.toggle-hide-btn {
+  border: none;
+  box-shadow: none;
+  padding: 4px 8px;
+  margin-left: auto;
 }
